@@ -28,8 +28,8 @@ export default {
   data () {
     return {
       loginForm: {
-        username: '',
-        password: ''
+        username: 'admin',
+        password: '123456'
       },
       loginFromRules: {
         username: [
@@ -52,7 +52,7 @@ export default {
         if (!valid) {
           this.$message.error('请输入信息')
         } else {
-          this.$message.success('登录成功')
+          this.$store.dispatch('UserLogin', this.loginForm)
         }
       })
     }
