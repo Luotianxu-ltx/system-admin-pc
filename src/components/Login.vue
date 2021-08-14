@@ -5,6 +5,9 @@
         <img src="../assets/logo.png" alt="">
       </div>
       <div>
+        <div>{{$store.state.init}}</div>
+        <div>{{$store.state.menuList}}</div>
+        <div>{{$store.state.buttonList}}</div>
         <el-form ref="loginFormRef" :model="loginForm" :rules="loginFromRules" label-width="0px" class="login_form">
           <el-form-item prop="username">
             <el-input prefix-icon="iconfont icon-user" placeholder="用户名" v-model="loginForm.username"></el-input>
@@ -17,7 +20,6 @@
             <el-button type="info" @click="resetLoginForm">重置</el-button>
             <el-button type="info" @click="logout">退出</el-button>
             <el-button type="info" @click="refreshToken">重新获取令牌</el-button>
-
           </el-form-item>
         </el-form>
       </div>
@@ -27,6 +29,7 @@
 
 <script>
 import store from '@/store'
+import { Key, PcCookie } from '@/utils/cookie'
 
 export default {
   name: 'Login',
@@ -57,7 +60,14 @@ export default {
         if (!valid) {
           this.$message.error('请输入信息')
         } else {
-          this.$store.dispatch('UserLogin', this.loginForm)
+          this.$store.dispatch('UserLogin', this.loginForm).then(response => {
+            if (response.code === 20000) {
+              this.$message.success('登录成功')
+            } else {
+              this.$message.error(response.message)
+            }
+          })
+          this.$store.dispatch('GetUserMenu')
         }
       })
     },

@@ -1,10 +1,13 @@
-import { login, logout, refreshToken } from '@/api/auth'
+import { login, logout, refreshToken, getUserMenuList } from '@/api/auth'
 import { PcCookie, Key } from '@/utils/cookie'
 
 const state = {
   userInfo: PcCookie.get(Key.userInfoKey) ? JSON.parse(PcCookie.get(Key.userInfoKey)) : null, // 用户基本信息
   accessToken: PcCookie.get(Key.accessTokenKey), // 访问令牌
-  refreshToken: PcCookie.get(Key.refreshTokenKey) // 刷新令牌
+  refreshToken: PcCookie.get(Key.refreshTokenKey), // 刷新令牌
+  init: false, // 是否已加载用户权限信息
+  menuList: [], // 当前用户拥有的菜单权限
+  buttonList: [] // 用户所拥有的按钮权限
 }
 
 const mutations = {
@@ -31,6 +34,12 @@ const mutations = {
     PcCookie.remove(Key.userInfoKey)
     PcCookie.remove(Key.accessTokenKey)
     PcCookie.remove(Key.refreshTokenKey)
+  },
+  // 权限列表
+  SET_SYSTEM_MENU (state, data) {
+    state.init = true
+    state.menuList = data.menuTreeList
+    state.buttonList = data.buttonList
   }
 }
 
@@ -60,9 +69,8 @@ const actions = {
   UserLogout ({ state, commit }) {
     logout(state.accessToken).then(response => {
       commit('RESET_USER_STATE')
-    }).catch(error => {
+    }).catch(() => {
       commit('RESET_USER_STATE')
-      console.log(error)
     })
   },
 
@@ -81,6 +89,20 @@ const actions = {
         commit('RESET_USER_STATE')
         reject(error)
       })
+    })
+  },
+  // 获取用户菜单和按钮权限
+  GetUserMenu ({ state, commit }) {
+    return new Promise((resolve, reject) => {
+      const userId = PcCookie.get(Key.userInfoKey) ? JSON.parse(PcCookie.get(Key.userInfoKey)).uid : null
+      if (userId) {
+        getUserMenuList(userId).then(response => {
+          commit('SET_SYSTEM_MENU', response.data)
+          resolve()
+        }).catch(error => {
+          reject(error)
+        })
+      }
     })
   }
 }

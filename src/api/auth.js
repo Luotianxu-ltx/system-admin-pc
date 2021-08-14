@@ -56,3 +56,10 @@ export function refreshToken (refreshToken) {
     }
   })
 }
+
+export function getUserMenuList (userId) {
+  return service.request({
+    method: 'get',
+    url: `/system/menu/user/${userId}`
+  })
+}
