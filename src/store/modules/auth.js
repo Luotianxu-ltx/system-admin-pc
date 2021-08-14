@@ -1,4 +1,4 @@
-import { login } from '@/api/auth'
+import { login, logout, refreshToken } from '@/api/auth'
 import { PcCookie, Key } from '@/utils/cookie'
 
 const state = {
@@ -50,6 +50,33 @@ const actions = {
           commit('SET_USER_STATE', data)
         }
         resolve(response)
+      }).catch(error => {
+        commit('RESET_USER_STATE')
+        reject(error)
+      })
+    })
+  },
+
+  UserLogout ({ state, commit }) {
+    logout(state.accessToken).then(response => {
+      commit('RESET_USER_STATE')
+    }).catch(error => {
+      commit('RESET_USER_STATE')
+      console.log(error)
+    })
+  },
+
+  SendRefreshToken ({ state, commit }) {
+    return new Promise((resolve, reject) => {
+      if (!state.refreshToken) {
+        commit('RESET_USER_STATE')
+        // eslint-disable-next-line prefer-promise-reject-errors
+        reject('没有刷新令牌')
+      }
+
+      refreshToken(state.refreshToken).then(response => {
+        commit('SET_USER_STATE', response.data)
+        resolve()
       }).catch(error => {
         commit('RESET_USER_STATE')
         reject(error)

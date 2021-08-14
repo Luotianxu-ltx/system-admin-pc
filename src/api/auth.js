@@ -19,3 +19,40 @@ export function login (data) {
     data: qs.stringify(data)
   })
 }
+
+export function getUserByUsername (username) {
+  return service.request({
+    method: 'get',
+    url: `/system/api/user/username/${username}`
+  })
+}
+
+export function registerUser (data) {
+  return service.request({
+    method: 'post',
+    url: '/system/api/user/register',
+    data: data
+  })
+}
+
+export function logout (accessToken) {
+  return service.request({
+    method: 'get',
+    url: '/auth/logout',
+    params: {
+      accessToken
+    }
+  })
+}
+
+export function refreshToken (refreshToken) {
+  return service.request({
+    headers,
+    auth: auth,
+    method: 'get',
+    url: '/auth/user/refreshToken',
+    params: {
+      refreshToken
+    }
+  })
+}

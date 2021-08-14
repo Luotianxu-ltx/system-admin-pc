@@ -1,4 +1,4 @@
-<template>
+ <template>
   <div class="login_container">
     <div class="login_box">
       <div class="avatar_box">
@@ -12,12 +12,12 @@
           <el-form-item prop="password">
             <el-input prefix-icon="iconfont icon-3702mima" type="password" placeholder="密码" v-model="loginForm.password"></el-input>
           </el-form-item>
+          <el-form-item prop="repPassword">
+            <el-input prefix-icon="iconfont icon-3702mima" type="password" placeholder="确认密码" v-model="loginForm.repPassword"></el-input>
+          </el-form-item>
           <el-form-item class="btns">
-            <el-button type="primary" @click="login">登录</el-button>
+            <el-button type="primary" @click="register">注册</el-button>
             <el-button type="info" @click="resetLoginForm">重置</el-button>
-            <el-button type="info" @click="logout">退出</el-button>
-            <el-button type="info" @click="refreshToken">重新获取令牌</el-button>
-
           </el-form-item>
         </el-form>
       </div>
@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import store from '@/store'
+import { getUserByUsername, registerUser } from '@/api/auth'
 
 export default {
   name: 'Login',
@@ -34,7 +34,8 @@ export default {
     return {
       loginForm: {
         username: 'admin',
-        password: '123456'
+        password: '123456',
+        repPassword: '123456'
       },
       loginFromRules: {
         username: [
@@ -42,6 +43,10 @@ export default {
           { min: 3, max: 10, message: '长度在 3 到 10 个字符', trigger: 'blur' }
         ],
         password: [
+          { required: true, message: '请输入密码', trigger: 'blur' },
+          { min: 3, max: 10, message: '长度在 3 到 10 个字符', trigger: 'blur' }
+        ],
+        repPassword: [
           { required: true, message: '请输入密码', trigger: 'blur' },
           { min: 3, max: 10, message: '长度在 3 到 10 个字符', trigger: 'blur' }
         ]
@@ -52,23 +57,28 @@ export default {
     resetLoginForm () {
       this.$refs.loginFormRef.resetFields()
     },
-    login () {
-      this.$refs.loginFormRef.validate(valid => {
+    register () {
+      this.$refs.loginFormRef.validate(async valid => {
         if (!valid) {
           this.$message.error('请输入信息')
         } else {
-          this.$store.dispatch('UserLogin', this.loginForm)
+          const { code, data } = await getUserByUsername(this.loginForm.username)
+          if (code !== 20000) {
+            this.$message.error('查询错误')
+            return false
+          }
+          if (data) {
+            this.$message.error('用户名已注册！')
+            return false
+          }
+
+          await registerUser(this.loginForm).then(response => {
+            const { code } = response
+            if (code === 20000) {
+              this.$message.success('注册成功')
+            }
+          })
         }
-      })
-    },
-    logout () {
-      store.dispatch('UserLogout')
-    },
-    refreshToken () {
-      store.dispatch('SendRefreshToken').then(() => {
-        this.$message.success('刷新成功')
-      }).catch(() => {
-        this.$message.error('您的身份已过期，请重新登录！')
       })
     }
   }
