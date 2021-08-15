@@ -39,7 +39,9 @@ const mutations = {
   SET_SYSTEM_MENU (state, data) {
     state.init = true
     state.menuList = data.menuTreeList
+    sessionStorage.setItem('menuList', JSON.stringify(data.menuTreeList))
     state.buttonList = data.buttonList
+    sessionStorage.setItem('buttonList', data.buttonList)
   }
 }
 

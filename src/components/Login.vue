@@ -63,11 +63,12 @@ export default {
           this.$store.dispatch('UserLogin', this.loginForm).then(response => {
             if (response.code === 20000) {
               this.$message.success('登录成功')
+              this.$store.dispatch('GetUserMenu')
+              this.$router.push('/index')
             } else {
               this.$message.error(response.message)
             }
           })
-          this.$store.dispatch('GetUserMenu')
         }
       })
     },

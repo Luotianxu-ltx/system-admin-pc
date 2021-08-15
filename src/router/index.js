@@ -2,6 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import { PcCookie, Key } from '@/utils/cookie'
 
+import Layout from '@/components/index'
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -18,6 +20,33 @@ const routes = [
     path: '/register',
     name: 'Register',
     component: () => import('@/components/Register')
+  },
+  {
+    path: '/index',
+    name: 'Index',
+    redirect: '/welcome',
+    component: () => import('@/components/index')
+  },
+  // 系统管理
+  {
+    path: '/system',
+    component: Layout,
+    redirect: '/system/user',
+    children: [
+      {
+        path: 'user',
+        component: () => import('@/views/system/user/user')
+      },
+      {
+        path: 'role',
+        component: () => import('@/views/system/role/role')
+      },
+      {
+        path: 'menu',
+        name: 'Menu',
+        component: () => import('@/views/system/menu/menu')
+      }
+    ]
   }
 ]
 
