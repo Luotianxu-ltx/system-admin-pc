@@ -1,13 +1,27 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import auth from '@/store/modules/auth'
+import getters from './getters'
+import persistedState from 'vuex-persistedstate'
 
 Vue.use(Vuex)
 
+// 导入所有Vuex模块
+const modulesFiles = require.context('./modules', true, /\.js$/)
+
+const modules = modulesFiles.keys().reduce((modules, modulePath) => {
+  // set './app.js' => 'app'
+  const moduleName = modulePath.replace(/^\.\/(.*)\.\w+$/, '$1')
+  const value = modulesFiles(modulePath)
+  modules[moduleName] = value.default
+  return modules
+}, {})
+
 const store = new Vuex.Store({
-  modules: {
-    auth
-  }
+  modules,
+  getters,
+  plugins: [
+    persistedState({ storage: window.sessionStorage })
+  ]
 })
 
 export default store

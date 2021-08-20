@@ -64,7 +64,7 @@ export default {
             if (response.code === 20000) {
               this.$message.success('登录成功')
               this.$store.dispatch('GetUserMenu')
-              this.$router.push('/index')
+              this.$router.push('/system/user')
             } else {
               this.$message.error(response.message)
             }

@@ -2,7 +2,9 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import { PcCookie, Key } from '@/utils/cookie'
 
-import Layout from '@/components/index'
+import layout from '../components/index'
+
+import baseComponent from '../layout/baseComponent'
 
 Vue.use(VueRouter)
 
@@ -30,7 +32,7 @@ const routes = [
   // 系统管理
   {
     path: '/system',
-    component: Layout,
+    component: layout,
     redirect: '/system/user',
     children: [
       {

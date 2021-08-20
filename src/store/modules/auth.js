@@ -13,17 +13,14 @@ const state = {
 const mutations = {
   // 赋值用户状态
   SET_USER_STATE (state, data) {
-    // eslint-disable-next-line camelcase
-    const { userInfo, access_token, refresh_token } = data
-    state.userInfo = JSON.stringify(userInfo)
-    // eslint-disable-next-line camelcase
-    state.accessToken = access_token
-    // eslint-disable-next-line camelcase
-    state.refreshToken = refresh_token
+    // const { userInfo, access_token, refresh_token } = data
+    state.userInfo = JSON.stringify(data.userInfo)
+    state.accessToken = data.access_token
+    state.refreshToken = data.refresh_token
 
-    PcCookie.set(Key.userInfoKey, JSON.stringify(userInfo))
-    PcCookie.set(Key.accessTokenKey, access_token)
-    PcCookie.set(Key.refreshTokenKey, refresh_token)
+    PcCookie.set(Key.userInfoKey, JSON.stringify(data.userInfo))
+    PcCookie.set(Key.accessTokenKey, data.access_token)
+    PcCookie.set(Key.refreshTokenKey, data.refresh_token)
   },
   // 重置用户状态
   RESET_USER_STATE (state) {
@@ -39,12 +36,15 @@ const mutations = {
   SET_SYSTEM_MENU (state, data) {
     state.init = true
     state.menuList = data.menuTreeList
-    sessionStorage.setItem('menuList', JSON.stringify(data.menuTreeList))
     state.buttonList = data.buttonList
+    sessionStorage.setItem('menuList', JSON.stringify(data.menuTreeList))
     sessionStorage.setItem('buttonList', data.buttonList)
   }
 }
 
+/**
+ * 用户登录
+ */
 const actions = {
   UserLogin ({ commit }, userData) {
     const { username, password } = userData
@@ -68,6 +68,12 @@ const actions = {
     })
   },
 
+  /**
+   * 退出系统
+   * @param state
+   * @param commit
+   * @constructor
+   */
   UserLogout ({ state, commit }) {
     logout(state.accessToken).then(response => {
       commit('RESET_USER_STATE')
@@ -93,7 +99,14 @@ const actions = {
       })
     })
   },
-  // 获取用户菜单和按钮权限
+
+  /**
+   * 获取用户菜单和按钮权限
+   * @param state
+   * @param commit
+   * @returns {Promise<unknown>}
+   * @constructor
+   */
   GetUserMenu ({ state, commit }) {
     return new Promise((resolve, reject) => {
       const userId = PcCookie.get(Key.userInfoKey) ? JSON.parse(PcCookie.get(Key.userInfoKey)).uid : null
@@ -110,6 +123,7 @@ const actions = {
 }
 
 export default {
+  namespace: true,
   state,
   mutations,
   actions
