@@ -2,9 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import { PcCookie, Key } from '@/utils/cookie'
 
-import layout from '../components/index'
-
-import baseComponent from '../layout/baseComponent'
+import baseComponent from '../layout/baseLayout'
 
 Vue.use(VueRouter)
 
@@ -16,23 +14,17 @@ const routes = [
   {
     path: '/auth',
     name: 'Login',
-    component: () => import('@/components/Login')
+    component: () => import('@/views/login/Login')
   },
   {
     path: '/register',
     name: 'Register',
-    component: () => import('@/components/Register')
-  },
-  {
-    path: '/index',
-    name: 'Index',
-    redirect: '/welcome',
-    component: () => import('@/components/index')
+    component: () => import('@/views/login/Register')
   },
   // 系统管理
   {
     path: '/system',
-    component: layout,
+    component: baseComponent,
     redirect: '/system/user',
     children: [
       {

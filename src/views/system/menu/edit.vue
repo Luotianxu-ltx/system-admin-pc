@@ -104,18 +104,11 @@ export default {
 
     async submitData () {
       let response = null
-
       if (this.formData.id) {
-        console.log(this.formData.id)
         // 修改
-        console.log('0000000')
-        console.log(this.formData)
         response = await api.update(this.formData)
-        console.log(response)
       } else {
         // 新增
-        console.log('99999999999')
-
         response = await api.add(this.formData)
       }
 

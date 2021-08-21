@@ -4,15 +4,15 @@
     <!-- 条件查询 -->
     <el-form :inline="true" :model="query" size="mini">
       <el-form-item label="用户名:">
-        <el-input v-model.trim="query.username" ></el-input>
+        <el-input v-model.trim="query.username"></el-input>
       </el-form-item>
       <el-form-item label="手机号:">
-        <el-input v-model.trim="query.mobile" ></el-input>
+        <el-input v-model.trim="query.mobile"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button icon="el-icon-search" type="primary" @click="queryData">查询</el-button>
-        <el-button icon="el-icon-refresh"  @click="reload">重置</el-button>
-        <el-button icon="el-icon-circle-plus-outline" type="primary" @click="openAdd" >新增</el-button>
+        <el-button icon="el-icon-refresh" @click="reload">重置</el-button>
+        <el-button icon="el-icon-circle-plus-outline" type="primary" @click="openAdd">新增</el-button>
       </el-form-item>
     </el-form>
 
@@ -20,46 +20,48 @@
       :data="list"
       stripe
       border
-      style="width: 100%">
-      <el-table-column  align="center" type="index" label="序号" width="60"></el-table-column>
-      <el-table-column  align="center" prop="username" label="用户名" ></el-table-column>
-      <el-table-column  align="center" prop="nickName" label="昵称" ></el-table-column>
-      <el-table-column  align="center" prop="mobile" label="手机号" ></el-table-column>
-      <el-table-column  align="center" prop="email" label="邮箱" ></el-table-column>
-      <el-table-column  align="center" prop="isAccountNonExpired" label="帐号过期" >
+      style="width: 100%"
+      @selection-change="handleSelectionChange">
+      <el-table-column type="selection" width="40"></el-table-column>
+      <el-table-column align="center" type="index" label="序号" width="50"></el-table-column>
+      <el-table-column align="center" prop="username" label="用户名"></el-table-column>
+      <el-table-column align="center" prop="nickName" label="昵称"></el-table-column>
+      <el-table-column align="center" prop="mobile" label="手机号" width="120"></el-table-column>
+      <el-table-column align="center" prop="email" label="邮箱" width="200"></el-table-column>
+      <el-table-column align="center" prop="isAccountNonExpired" label="帐号过期">
         <!-- (1 未过期，0已过期) -->
         <template slot-scope="scope">
           <el-tag v-if="scope.row.isAccountNonExpired === 0" type="danger">过期</el-tag>
           <el-tag v-if="scope.row.isAccountNonExpired === 1" type="success">正常</el-tag>
         </template>
       </el-table-column>
-      <el-table-column  align="center" prop="isAccountNonLocked" label="帐号锁定" >
+      <el-table-column align="center" prop="isAccountNonLocked" label="帐号锁定">
         <!-- (1 未锁定，0已锁定) -->
         <template slot-scope="scope">
           <el-tag v-if="scope.row.isAccountNonLocked === 0" type="danger">锁定</el-tag>
           <el-tag v-if="scope.row.isAccountNonLocked === 1" type="success">正常</el-tag>
         </template>
       </el-table-column>
-      <el-table-column  align="center" prop="isCredentialsNonExpired" label="密码过期" >
+      <el-table-column align="center" prop="isCredentialsNonExpired" label="密码过期">
         <!-- (1 未过期，0已过期) -->
         <template slot-scope="scope">
           <el-tag v-if="scope.row.isCredentialsNonExpired === 0" type="danger">过期</el-tag>
           <el-tag v-if="scope.row.isCredentialsNonExpired === 1" type="success">正常</el-tag>
         </template>
       </el-table-column>
-      <el-table-column  align="center" prop="isEnabled" label="是否可用" >
+      <el-table-column align="center" prop="isEnabled" label="是否可用">
         <!-- (1 可用，0 删除用户) -->
         <template slot-scope="scope">
           <el-tag v-if="scope.row.isEnabled === 0" type="danger">已删除</el-tag>
           <el-tag v-if="scope.row.isEnabled === 1" type="success">可用</el-tag>
         </template>
       </el-table-column>
-      <el-table-column  align="center" label="操作" width="330">
+      <el-table-column align="center" label="操作" width="330">
         <template slot-scope="scope" v-if="scope.row.isEnabled === 1">
           <el-button type="success" @click="handleEdit(scope.row.id)" size="mini">编辑</el-button>
-          <el-button type="danger"  @click="handleDelete(scope.row.id)"  size="mini">删除</el-button>
+          <el-button type="danger" @click="handleDelete(scope.row.id)" size="mini">删除</el-button>
           <el-button type="primary" @click="handleRole(scope.row.id)" size="mini">设置角色</el-button>
-          <el-button type="primary"  @click="handlePwd(scope.row.id)"  size="mini">密码修改</el-button>
+          <el-button type="primary" @click="handlePwd(scope.row.id)" size="mini">密码修改</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -76,8 +78,9 @@
     </el-pagination>
 
     <!-- 编辑组件 -->
-    <edit :title="edit.title" :formData="edit.formData" :visible="edit.visible" :remoteClose="remoteClose" />
+    <edit :title="edit.title" :formData="edit.formData" :visible="edit.visible" :remoteClose="remoteClose"/>
 
+    <!--设置角色-->
     <el-dialog title="设置角色" :visible.sync="role.visible" width="65%">
       <!-- roleIds是当前用户所拥有的角色id, saveUserRole事件是子组件进行触发提交选择的角色id -->
       <Role :roleIds="role.roleIds" @saveUserRole="saveUserRole"/>
@@ -91,16 +94,17 @@
 <script>
 
 import * as api from '@/api/user'
-
 import Edit from './edit'
 import Role from '../role/role'
 import Password from './password'
 
 export default {
   name: 'User', // 和对应路由表中配置的name值一致
-
-  components: { Edit, Role, Password },
-
+  components: {
+    Edit,
+    Role,
+    Password
+  },
   data () {
     return {
       list: [],
@@ -109,23 +113,18 @@ export default {
         size: 20,
         total: 0
       },
-
       query: {},
-
       edit: {
         title: '',
         visible: false,
         formData: {}
       },
-
       role: { // 弹出设置角色组件
         visible: false,
         // 传递到子组件中时,至少会传递一个空数据[], 子组件判断是否有roleIds值
         roleIds: [], // 封装当前用户所拥有的 角色id
-
         userId: null // 点击哪个用户，就是哪个用户id,当保存用户角色时，需要使用
       },
-
       pwd: { // 修改密码组件
         userId: null, // 修改哪一个用户
         visible: false
@@ -138,6 +137,9 @@ export default {
   },
 
   methods: {
+    handleSelectionChange (val) {
+      const a = val.map((item) => item.id)
+    },
     async fetchData () {
       const { data } = await api.getList(this.query, this.page.current, this.page.size)
       this.list = data.records
@@ -232,10 +234,16 @@ export default {
       // 保存用户角色信息
       api.saveUserRole(this.role.userId, roleIds).then(response => {
         if (response.code === 20000) {
-          this.$message({ message: '分配角色成功', type: 'success' })
+          this.$message({
+            message: '分配角色成功',
+            type: 'success'
+          })
           this.role.visible = false
         } else {
-          this.$message({ message: '分配角色失败', type: 'error' })
+          this.$message({
+            message: '分配角色失败',
+            type: 'error'
+          })
         }
       })
     },

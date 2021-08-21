@@ -57,7 +57,7 @@ export default {
           // 校验通过，提交表单数据
           this.submitData()
         } else {
-          // console.log('error submit!!');
+          this.$message({ message: '已取消', type: 'info' })
           return false
         }
       })

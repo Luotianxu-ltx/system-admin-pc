@@ -1,6 +1,5 @@
 <template>
-    <el-dialog :title="title" :visible.sync="visible" width="380px"
-    :before-close="handleClose">
+    <el-dialog :title="title" :visible.sync="visible" width="380px" :before-close="handleClose">
         <el-form :rules="rules" ref="formData" :model="formData" label-width="100px"
             label-position="right" style="width: 300px" status-icon>
             <el-form-item label="新密码：" prop="newPassword">
@@ -54,7 +53,7 @@ export default {
       rules: {
         newPassword: [
           { required: true, message: '新密码不能为空', trigger: 'blur' },
-          { min: 6, max: 30, message: '长度在 6 到 40 个字符', trigger: 'blur' }
+          { min: 2, max: 10, message: '长度在 2 到 10 个字符', trigger: 'blur' }
         ],
         repPassword: [
           { required: true, message: '确认密码不能为空', trigger: 'blur' },

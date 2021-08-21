@@ -72,7 +72,7 @@ export default {
       rules: {
         username: [
           { required: true, message: '请输入用户名', trigger: 'blur' },
-          { min: 6, max: 30, message: '长度在 6 到 30 个字符', trigger: 'blur' }
+          { min: 2, max: 10, message: '长度在 2 到 10 个字符', trigger: 'blur' }
         ],
 
         nickName: [
@@ -107,7 +107,7 @@ export default {
           // 校验通过，提交表单数据
           this.submitData()
         } else {
-          // console.log('error submit!!');
+          this.$message({ message: '已取消', type: 'info' })
           return false
         }
       })
@@ -125,7 +125,7 @@ export default {
         response = await api.add(this.formData)
       }
 
-      if (response.code = 20000) {
+      if (response.code === 20000) {
         this.$message({ message: '保存成功', type: 'success' })
         this.handleClose()
       } else {

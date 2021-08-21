@@ -19,6 +19,7 @@ const modules = modulesFiles.keys().reduce((modules, modulePath) => {
 const store = new Vuex.Store({
   modules,
   getters,
+  // Vuex 数据持久化
   plugins: [
     persistedState({ storage: window.sessionStorage })
   ]
