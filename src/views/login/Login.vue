@@ -62,7 +62,8 @@ export default {
             if (response.code === 20000) {
               this.$message.success('登录成功')
               this.$store.dispatch('GetUserMenu')
-              this.$router.push('/system/user')
+              store.dispatch('saveActiveNav', '/info/userInfo')
+              this.$router.push('/info/userInfo')
             } else {
               this.$message.error(response.message)
             }

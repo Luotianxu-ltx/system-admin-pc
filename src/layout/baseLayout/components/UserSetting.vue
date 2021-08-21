@@ -1,6 +1,8 @@
 <template>
   <div class="header">
-    <div></div>
+    <div class="togSideBar">
+      <i :class="sidebarOpen === false ? 'el-icon-s-fold' : 'el-icon-s-unfold'" @click="toggleSideBar"></i>
+    </div>
     <div class="right">
       <div class="userImg">
         <img :src=img class="user-avatar" alt="">
@@ -27,7 +29,8 @@ export default {
   name: 'UserSetting',
   computed: {
     ...mapGetters([
-      'userInfo'
+      'userInfo',
+      'sidebarOpen'
     ])
   },
   data () {
@@ -56,6 +59,9 @@ export default {
           message: '已取消'
         })
       })
+    },
+    toggleSideBar () {
+      store.dispatch('toggleSideBar')
     }
   }
 }
@@ -67,9 +73,15 @@ export default {
   justify-content: space-between;
   align-items: center;
   height: 100%;
-  padding: 0 20px;
+  padding: 0 10px;
   margin: 0;
   border-bottom: 1px solid #ccc;
+
+  .togSideBar {
+    i {
+      font-size: 20px;
+    }
+  }
 
   .right {
     display: flex;

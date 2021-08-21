@@ -9,7 +9,9 @@ const getters = {
   // 按钮列表
   buttonList: state => state.auth.buttonList,
   // 侧边栏是否展开
-  sidebarOpen: state => state.system.sidebarOpen
+  sidebarOpen: state => state.system.sidebarOpen,
+  // 正在显示的路由
+  activeNav: state => state.system.activeNav
 }
 
 export default getters

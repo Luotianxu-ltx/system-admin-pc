@@ -120,7 +120,7 @@ export default {
     chekedRoles () {
       // 强调：在el-table组件中一定要加上 ref="dataTable"
       // 清空上一次选择
-      this.$refs.dataTable.clearSelection()
+      // this.$refs.dataTable.clearSelection()
       if (this.roleIds) {
         // 循环出查询到每个角色数据，要进行判断父组件组件的roleIds中的每个角色对象
         this.list.forEach(item => {
