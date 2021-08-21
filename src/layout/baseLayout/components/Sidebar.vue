@@ -42,4 +42,8 @@ export default {
   height: 100%;
   background-color: #333744;
 }
+
+.el-menu {
+  border-right: 0;
+}
 </style>

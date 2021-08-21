@@ -23,6 +23,18 @@ const routes = [
   },
   // 系统管理
   {
+    path: '/info',
+    component: baseComponent,
+    redirect: '/info/userInfo',
+    children: [
+      {
+        path: 'userInfo',
+        component: () => import('@/views/info/userInfo')
+      }
+    ]
+  },
+  // 系统管理
+  {
     path: '/system',
     component: baseComponent,
     redirect: '/system/user',
