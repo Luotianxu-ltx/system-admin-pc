@@ -5,7 +5,7 @@
         <Sidebar></Sidebar>
       </el-aside>
       <el-container>
-        <el-header height="60px">
+        <el-header>
           <UserSetting></UserSetting>
         </el-header>
         <el-main>
@@ -20,6 +20,7 @@
 import { mapGetters } from 'vuex'
 import Sidebar from './components/Sidebar'
 import UserSetting from './components/UserSetting'
+
 export default {
   name: 'index',
   components: {
@@ -37,18 +38,3 @@ export default {
   }
 }
 </script>
-
-<style lang="less" scoped>
-.app {
-  height: 100%;
-  .el-container {
-    height: 100%;
-    .el-header {
-      padding: 0;
-    }
-    .el-main {
-      padding: 0;
-    }
-  }
-}
-</style>

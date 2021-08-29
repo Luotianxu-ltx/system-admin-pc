@@ -4,18 +4,18 @@
       <i :class="sidebarOpen === false ? 'el-icon-s-fold' : 'el-icon-s-unfold'" @click="toggleSideBar"></i>
     </div>
     <div class="right">
-      <Screenfill class="item" id="screenFull"></Screenfill>
+      <Screenfill class="item line" id="screenFull"></Screenfill>
 
       <div class="userImg">
-        <img :src=img class="user-avatar" alt="">
+        <img src="../../../assets/img/17e2f2f4c273bcf288d7193810557d80.jpeg" class="user-avatar" alt="">
       </div>
 
       <el-dropdown trigger="click">
         <span class="el-dropdown-link" >
-          <span class="userName">{{ name }}</span>
+          <span class="userName">{{ name }}<i class="el-icon-arrow-down el-icon--right"></i></span>
         </span>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item>个人中心</el-dropdown-item>
+          <el-dropdown-item @click.native="userCenter()">个人中心</el-dropdown-item>
           <el-dropdown-item divided @click.native="logout()">退出</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
@@ -68,6 +68,9 @@ export default {
     },
     toggleSideBar () {
       store.dispatch('toggleSideBar')
+    },
+    userCenter () {
+      this.$router.push('/info/user')
     }
   }
 }
@@ -79,15 +82,15 @@ export default {
   justify-content: space-between;
   align-items: center;
   height: 100%;
-  padding: 0 10px;
+  padding: 0 15px;
   margin: 0;
   border-bottom: 1px solid #ccc;
-  background-color: #333744;
+  background-color: #fff;
 
   .togSideBar {
     i {
-      font-size: 20px;
-      color: #e4e5e6;
+      font-size: 22px;
+      color: #252323;
     }
   }
 
@@ -100,16 +103,31 @@ export default {
       color: #e4e5e6;
     }
 
+    .line {
+      border-right: 1px solid #ccc;
+    }
+
+    .userImg {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 0 solid #e5e5e5;
+      overflow: hidden;
+      margin-left: 10px;
+    }
+
     img {
-      width: 40px;
-      height: 40px;
-      border-radius: 50px;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 0 solid #e5e5e5;
     }
 
     .userName {
       font-size: 15px;
-      color: #e4e5e6;
+      color: #413c3c;
       font-weight: 500;
+      margin-left: 5px;
     }
   }
 

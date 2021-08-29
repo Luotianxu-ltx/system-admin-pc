@@ -4,14 +4,15 @@
     <!-- 条件查询 -->
     <el-form :inline="true" :model="query" size="mini">
       <el-form-item label="角色名称：">
-        <el-input v-model.trim="query.name" ></el-input>
+        <el-input v-model.trim="query.name"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button icon="el-icon-search" type="primary" @click="queryData">查询</el-button>
-        <el-button icon="el-icon-refresh"  @click="reload">重置</el-button>
-        <el-button v-if="!roleIds" icon="el-icon-circle-plus-outline" type="primary" @click="openAdd" >新增</el-button>
+        <el-button icon="el-icon-refresh" @click="reload">重置</el-button>
+        <el-button v-if="!roleIds" icon="el-icon-circle-plus-outline" type="primary" @click="openAdd">新增</el-button>
 
-        <el-button v-if="roleIds" icon="el-icon-circle-plus-outline" type="success" @click="handleUserRole" >设置角色</el-button>
+        <el-button v-if="roleIds" icon="el-icon-circle-plus-outline" type="success" @click="handleUserRole">设置角色
+        </el-button>
       </el-form-item>
     </el-form>
 
@@ -22,21 +23,22 @@
       style="width: 100%"
       row-key="id"
       ref="dataTable"
+      :highlight-current-row="true"
       @selection-change="handleSelectionChange"
     >
       <!-- reserve-selection必须配合上面的row-key使用，这样可以在切换页码后，保留前面选中的行 -->
       <!-- 多选 -->
       <el-table-column align="center" reserve-selection type="selection" width="55"></el-table-column>
 
-      <el-table-column  align="center" type="index" label="序号" width="60"></el-table-column>
-      <el-table-column  align="center" prop="name" label="角色名称" ></el-table-column>
-      <el-table-column  align="center" prop="remark" label="备注" ></el-table-column>
+      <el-table-column align="center" type="index" label="序号" width="60"></el-table-column>
+      <el-table-column align="center" prop="name" label="角色名称"></el-table-column>
+      <el-table-column align="center" prop="remark" label="备注"></el-table-column>
       <!--roleIds如果有值，则是用户管理组件传递过来了，则把操作列隐藏  -->
-      <el-table-column  align="center" label="操作" v-if="!roleIds">
+      <el-table-column align="center" label="操作" v-if="!roleIds">
         <template slot-scope="scope">
-          <el-button type="primary" @click="handlePermission(scope.row.id)" size="mini">分配权限</el-button>
           <el-button type="success" @click="handleEdit(scope.row.id)" size="mini">编辑</el-button>
-          <el-button type="danger"  @click="handleDelete(scope.row.id)"  size="mini">删除</el-button>
+          <el-button type="primary" @click="handlePermission(scope.row.id)" size="mini">分配权限</el-button>
+          <el-button type="danger" @click="handleDelete(scope.row.id)" size="mini">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -70,7 +72,10 @@ import Permission from './permission'
 export default {
   name: 'Role', // 和对应路由表中配置的name值一致
 
-  components: { Edit, Permission },
+  components: {
+    Edit,
+    Permission
+  },
 
   // 当用户管理模块, 将当前这个组件文件作为子组件时,进行接收父组件传递过来的属性
   props: {

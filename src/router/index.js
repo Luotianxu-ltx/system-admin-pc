@@ -21,15 +21,19 @@ const routes = [
     name: 'Register',
     component: () => import('@/views/login/Register')
   },
-  // 系统管理
+  // 用户中心
   {
     path: '/info',
     component: baseComponent,
-    redirect: '/info/userInfo',
+    redirect: '/info/dashboard',
     children: [
       {
-        path: 'userInfo',
-        component: () => import('@/views/info/userInfo')
+        path: 'dashboard',
+        component: () => import('@/views/dashboard/dashboard')
+      },
+      {
+        path: 'user',
+        component: () => import('@/views/info/user')
       }
     ]
   },
@@ -54,7 +58,7 @@ const routes = [
       }
     ]
   },
-  // 系统管理
+  // 地图
   {
     path: '/map',
     component: baseComponent,

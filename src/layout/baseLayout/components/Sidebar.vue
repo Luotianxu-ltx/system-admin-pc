@@ -2,8 +2,8 @@
   <div class="el-scrollbar">
     <!-- 侧边栏菜单区域 -->
     <el-menu
-      background-color="#333744"
-      text-color="#fff"
+      background-color="#fff"
+      text-color="#5f5f5f"
       active-text-color="#409EFF"
       unique-opened
       :collapse="isCollapse"
@@ -63,7 +63,9 @@ export default {
 <style lang="less" scoped>
 .el-scrollbar {
   height: 100%;
-  background-color: #333744;
+  background-color: #fff;
+  border-right: 1px solid #e4e4e4;
+  box-shadow: 0 2px 6px 0 rgb(218 218 253 / 65%), 0 2px 6px 0 rgb(206 206 238 / 54%)!important;
 }
 
 .el-menu {

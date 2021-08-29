@@ -21,6 +21,7 @@
       stripe
       border
       style="width: 100%"
+      :highlight-current-row="true"
       @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="40"></el-table-column>
       <el-table-column align="center" type="index" label="序号" width="50"></el-table-column>
@@ -59,9 +60,9 @@
       <el-table-column align="center" label="操作" width="330">
         <template slot-scope="scope" v-if="scope.row.isEnabled === 1">
           <el-button type="success" @click="handleEdit(scope.row.id)" size="mini">编辑</el-button>
-          <el-button type="danger" @click="handleDelete(scope.row.id)" size="mini">删除</el-button>
           <el-button type="primary" @click="handleRole(scope.row.id)" size="mini">设置角色</el-button>
           <el-button type="primary" @click="handlePwd(scope.row.id)" size="mini">密码修改</el-button>
+          <el-button type="danger" @click="handleDelete(scope.row.id)" size="mini">删除</el-button>
         </template>
       </el-table-column>
     </el-table>

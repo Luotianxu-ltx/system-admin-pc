@@ -49,6 +49,8 @@ export default {
 
 <style lang="less" scoped>
 .el-icon-full-screen {
-  font-size: 20px;
+  color: #252323;
+  font-size: 22px;
+  font-weight: 800;
 }
 </style>
