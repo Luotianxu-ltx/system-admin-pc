@@ -1,6 +1,6 @@
 <template>
   <div>
-    <i class="el-icon-full-screen" @click="full"></i>
+    <i :class="isFullscreen === false ? 'iconfont icon-fullScreen' : 'iconfont icon-suoxiao1'" @click="full"></i>
   </div>
 </template>
 
@@ -48,7 +48,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.el-icon-full-screen {
+i {
   color: #252323;
   font-size: 22px;
   font-weight: 800;
