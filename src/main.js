@@ -6,6 +6,9 @@ import './plugins/element.js'
 
 import './assets/css/global.css'
 import './assets/fonts/iconfont.css'
+import './utils/leaflet/leaflet.css'
+
+import L from './utils/leaflet/leaflet'
 
 import axios from 'axios'
 axios.defaults.baseURL = ''

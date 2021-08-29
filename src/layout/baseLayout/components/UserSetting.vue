@@ -4,13 +4,15 @@
       <i :class="sidebarOpen === false ? 'el-icon-s-fold' : 'el-icon-s-unfold'" @click="toggleSideBar"></i>
     </div>
     <div class="right">
+      <Screenfill class="item" id="screenFull"></Screenfill>
+
       <div class="userImg">
         <img :src=img class="user-avatar" alt="">
       </div>
 
       <el-dropdown trigger="click">
         <span class="el-dropdown-link" >
-          {{ name }}
+          <span class="userName">{{ name }}</span>
         </span>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item>个人中心</el-dropdown-item>
@@ -24,9 +26,13 @@
 <script>
 import { mapGetters } from 'vuex'
 import store from '@/store'
+import Screenfill from '@/components/Screenfill'
 
 export default {
   name: 'UserSetting',
+  components: {
+    Screenfill
+  },
   computed: {
     ...mapGetters([
       'userInfo',
@@ -76,16 +82,23 @@ export default {
   padding: 0 10px;
   margin: 0;
   border-bottom: 1px solid #ccc;
+  background-color: #333744;
 
   .togSideBar {
     i {
       font-size: 20px;
+      color: #e4e5e6;
     }
   }
 
   .right {
     display: flex;
     align-items: center;
+
+    .item {
+      padding: 0 10px;
+      color: #e4e5e6;
+    }
 
     img {
       width: 40px;
@@ -94,7 +107,9 @@ export default {
     }
 
     .userName {
-      font-size: 18px;
+      font-size: 15px;
+      color: #e4e5e6;
+      font-weight: 500;
     }
   }
 

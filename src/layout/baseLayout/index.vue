@@ -5,7 +5,7 @@
         <Sidebar></Sidebar>
       </el-aside>
       <el-container>
-        <el-header height="50px">
+        <el-header height="60px">
           <UserSetting></UserSetting>
         </el-header>
         <el-main>
@@ -47,7 +47,7 @@ export default {
       padding: 0;
     }
     .el-main {
-      padding: 10px;
+      padding: 0;
     }
   }
 }

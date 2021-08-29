@@ -53,6 +53,18 @@ const routes = [
         component: () => import('@/views/system/menu/menu')
       }
     ]
+  },
+  // 系统管理
+  {
+    path: '/map',
+    component: baseComponent,
+    redirect: '/map/testMap',
+    children: [
+      {
+        path: 'testMap',
+        component: () => import('@/views/map/mapTest')
+      }
+    ]
   }
 ]
 
