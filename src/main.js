@@ -3,8 +3,12 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import './plugins/element.js'
+
+// 引入全局组件
+import Icon from '@/components/Icon'
+
 // 阿里图标
-import './assets/fonts/iconfont.css'
+import './assets/icon/iconfont.css'
 // 地图样式
 import './utils/leaflet/leaflet.css'
 // 地图js
@@ -16,6 +20,7 @@ Vue.prototype.$http = axios
 
 Vue.config.productionTip = false
 
+Vue.component('Icon', Icon)
 new Vue({
   router,
   store,

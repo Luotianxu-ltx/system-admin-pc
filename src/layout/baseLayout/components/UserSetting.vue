@@ -1,7 +1,7 @@
 <template>
   <div class="header">
     <div class="togSideBar">
-      <i :class="sidebarOpen === false ? 'el-icon-s-fold' : 'el-icon-s-unfold'" @click="toggleSideBar"></i>
+      <Icon :icon="sidebarOpen === false ? 'muluzhankai' : 'mulushousuo'" @click.native="toggleSideBar"></Icon>
     </div>
     <div class="right">
       <Screenfill class="item line" id="screenFull"></Screenfill>
@@ -11,8 +11,15 @@
       </div>
 
       <el-dropdown trigger="click">
-        <span class="el-dropdown-link" >
-          <span class="userName">{{ name }}<i class="el-icon-arrow-down el-icon--right"></i></span>
+        <span class="el-dropdown-link">
+          <div class="user">
+            <div>
+              <div class="userName">{{ name }}</div>
+              <div class="role">超级管理员</div>
+            </div>
+            <Icon icon="xiangxia" font="16"></Icon>
+          </div>
+
         </span>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item @click.native="userCenter()">个人中心</el-dropdown-item>
@@ -67,6 +74,7 @@ export default {
       })
     },
     toggleSideBar () {
+      console.log(9999)
       store.dispatch('toggleSideBar')
     },
     userCenter () {
@@ -123,11 +131,22 @@ export default {
       border: 0 solid #e5e5e5;
     }
 
-    .userName {
-      font-size: 15px;
-      color: #413c3c;
-      font-weight: 500;
+    .user {
+      display: flex;
+      align-items: center;
+      text-align: center;
       margin-left: 5px;
+
+      .userName {
+        font-size: 17px;
+        color: #413c3c;
+        font-weight: 500;
+      }
+
+      .role {
+        font-size: 13px;
+        color: #a9a8a8
+      }
     }
   }
 

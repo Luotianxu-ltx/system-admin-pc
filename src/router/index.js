@@ -33,7 +33,7 @@ const routes = [
       },
       {
         path: 'user',
-        component: () => import('@/views/info/user')
+        component: () => import('@/views/user/user')
       }
     ]
   },

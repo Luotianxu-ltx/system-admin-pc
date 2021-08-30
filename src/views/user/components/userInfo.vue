@@ -18,6 +18,10 @@
         <div class="text"><i class="iconfont icon-time"></i>创建时间</div>
         <div class="text-content">2021年8月29日</div>
       </div>
+      <div class="list">
+        <div class="text"><i class="iconfont icon-time"></i>修改时间</div>
+        <div class="text-content">2021年8月29日</div>
+      </div>
     </div>
   </div>
 </template>

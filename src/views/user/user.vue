@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import userInfo from '@/views/info/components/userInfo'
+import userInfo from '@/views/user/components/userInfo'
 export default {
   name: 'user',
   components: {
