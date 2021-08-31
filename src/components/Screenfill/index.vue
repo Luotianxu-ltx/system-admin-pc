@@ -1,6 +1,6 @@
 <template>
   <div>
-    <i :class="isFullscreen === false ? 'iconfont icon-fullScreen' : 'iconfont icon-suoxiao'" @click="full"></i>
+    <Icon :icon="isFullscreen === false ? 'fullScreen' : 'suoxiao'" font="22" @click.native="full"></Icon>
   </div>
 </template>
 

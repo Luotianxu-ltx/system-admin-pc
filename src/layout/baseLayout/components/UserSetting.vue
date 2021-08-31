@@ -1,7 +1,7 @@
 <template>
   <div class="header">
     <div class="togSideBar">
-      <Icon :icon="sidebarOpen === false ? 'muluzhankai' : 'mulushousuo'" @click.native="toggleSideBar"></Icon>
+      <Icon :icon="sidebarOpen === false ? 'muluzhankai' : 'mulushousuo'" font="22" @click.native="toggleSideBar"></Icon>
     </div>
     <div class="right">
       <Screenfill class="item line" id="screenFull"></Screenfill>

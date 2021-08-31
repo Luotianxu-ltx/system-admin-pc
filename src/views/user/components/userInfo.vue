@@ -7,19 +7,27 @@
     </div>
     <div class="info">
       <div class="list">
-        <div class="text"><i class="iconfont icon-dianhua"></i>电话</div>
+        <div class="text">
+          <Icon icon="dianhua" class="icon"></Icon>电话
+        </div>
         <div class="text-content">15122061897</div>
       </div>
       <div class="list">
-        <div class="text"><i class="iconfont icon-youxiang"></i>邮箱</div>
+        <div class="text">
+          <Icon icon="youxiang" class="icon"></Icon>邮箱
+        </div>
         <div class="text-content">1265062404@qq.com</div>
       </div>
       <div class="list">
-        <div class="text"><i class="iconfont icon-time"></i>创建时间</div>
+        <div class="text">
+          <Icon icon="time" class="icon"></Icon>创建时间
+        </div>
         <div class="text-content">2021年8月29日</div>
       </div>
       <div class="list">
-        <div class="text"><i class="iconfont icon-time"></i>修改时间</div>
+        <div class="text">
+          <Icon icon="time" class="icon"></Icon>修改时间
+        </div>
         <div class="text-content">2021年8月29日</div>
       </div>
     </div>
@@ -86,14 +94,14 @@ export default {
       margin-bottom: 10px;
       border-bottom: 1px solid rgba(0, 0, 0, .125);
 
-      i {
-        margin: 0 5px;
-      }
-
       .text {
         font-size: 16px;
         font-weight: 700;
         color: #32393f;
+
+        .icon {
+          margin-right: 5px;
+        }
       }
     }
 

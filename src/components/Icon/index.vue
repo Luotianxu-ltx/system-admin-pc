@@ -15,7 +15,7 @@ export default {
     font: {
       required: false,
       type: String,
-      default: '22'
+      default: '16'
     },
     color: {
       required: false,

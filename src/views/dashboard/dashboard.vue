@@ -1,7 +1,6 @@
 <template>
   <div>
     Hello
-    <Icon icon="icon-wechat-fill"></Icon>
   </div>
 </template>
 
