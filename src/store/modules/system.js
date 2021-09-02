@@ -12,9 +12,18 @@ const mutations = {
 }
 
 const actions = {
+  /**
+   * 侧边栏是否展开
+   * @param commit
+   */
   toggleSideBar ({ commit }) {
     commit('TOGGLE_SIDEBAR')
   },
+  /**
+   * 保存当前路由
+   * @param commit
+   * @param data
+   */
   saveActiveNav ({ commit }, data) {
     commit('SET_ACTIVE', data)
   }

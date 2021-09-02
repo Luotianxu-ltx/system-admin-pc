@@ -74,7 +74,6 @@ export default {
       })
     },
     toggleSideBar () {
-      console.log(9999)
       store.dispatch('toggleSideBar')
     },
     userCenter () {

@@ -16,11 +16,6 @@ const routes = [
     name: 'Login',
     component: () => import('@/views/login/Login')
   },
-  {
-    path: '/register',
-    name: 'Register',
-    component: () => import('@/views/login/Register')
-  },
   // 用户中心
   {
     path: '/info',

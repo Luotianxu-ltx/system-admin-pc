@@ -27,7 +27,6 @@ const mutations = {
     state.userInfo = null
     state.accessToken = null
     state.refreshToken = null
-
     PcCookie.remove(Key.userInfoKey)
     PcCookie.remove(Key.accessTokenKey)
     PcCookie.remove(Key.refreshTokenKey)
@@ -37,23 +36,25 @@ const mutations = {
     state.init = true
     state.menuList = data.menuTreeList
     state.buttonList = data.buttonList
-    sessionStorage.setItem('menuList', JSON.stringify(data.menuTreeList))
-    sessionStorage.setItem('buttonList', data.buttonList)
+  },
+  // 清空权限列表
+  RESET_SYSTEM_MENU (state, data) {
+    state.menuList = null
+    state.buttonList = null
   }
+
 }
 
-/**
- * 用户登录
- */
 const actions = {
+  /**
+   * 用户登录
+   */
   UserLogin ({ commit }, userData) {
     const { username, password } = userData
-
     const loginData = {
       username: username.trim(),
       password: password
     }
-
     return new Promise((resolve, reject) => {
       login(loginData).then(response => {
         const { code, data } = response
@@ -70,15 +71,14 @@ const actions = {
 
   /**
    * 退出系统
-   * @param state
-   * @param commit
-   * @constructor
    */
   UserLogout ({ state, commit }) {
     logout(state.accessToken).then(response => {
       commit('RESET_USER_STATE')
+      commit('RESET_SYSTEM_MENU')
     }).catch(() => {
       commit('RESET_USER_STATE')
+      commit('RESET_SYSTEM_MENU')
     })
   },
 
@@ -89,7 +89,6 @@ const actions = {
         // eslint-disable-next-line prefer-promise-reject-errors
         reject('没有刷新令牌')
       }
-
       refreshToken(state.refreshToken).then(response => {
         commit('SET_USER_STATE', response.data)
         resolve()
@@ -99,26 +98,11 @@ const actions = {
       })
     })
   },
-
   /**
-   * 获取用户菜单和按钮权限
-   * @param state
-   * @param commit
-   * @returns {Promise<unknown>}
-   * @constructor
+   * 菜单权限
    */
-  GetUserMenu ({ state, commit }) {
-    return new Promise((resolve, reject) => {
-      const userId = PcCookie.get(Key.userInfoKey) ? JSON.parse(PcCookie.get(Key.userInfoKey)).uid : null
-      if (userId) {
-        getUserMenuList(userId).then(response => {
-          commit('SET_SYSTEM_MENU', response.data)
-          resolve()
-        }).catch(error => {
-          reject(error)
-        })
-      }
-    })
+  GetUserMenu ({ commit }, data) {
+    commit('SET_SYSTEM_MENU', data)
   }
 }
 

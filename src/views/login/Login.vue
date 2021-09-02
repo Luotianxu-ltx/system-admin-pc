@@ -43,7 +43,7 @@
 
 <script>
 import store from '@/store'
-import { getUserByUsername, registerUser } from '@/api/auth'
+import { getUserByUsername, registerUser, getUserMenuList } from '@/api/auth'
 
 export default {
   name: 'Login',
@@ -113,12 +113,9 @@ export default {
     login () {
       this.$refs.loginFormRef.validate(valid => {
         if (valid) {
-          this.$store.dispatch('UserLogin', this.loginForm).then(response => {
+          store.dispatch('UserLogin', this.loginForm).then(response => {
             if (response.code === 20000) {
-              this.$message.success('登录成功')
-              this.$store.dispatch('GetUserMenu')
-              store.dispatch('saveActiveNav', '/info/dashboard')
-              this.$router.push('/info/dashboard')
+              this.getMenu()
             } else {
               this.$message.error(response.message)
             }
@@ -126,14 +123,25 @@ export default {
         }
       })
     },
+    // 获取菜单列表
+    async getMenu () {
+      const uid = JSON.parse(this.$store.getters.userInfo).uid
+      const res = await getUserMenuList(uid)
+      if (res.code !== 20000) {
+        await store.dispatch('UserLogout')
+        return this.$message.warning(res.message)
+      } else {
+        this.$message.success('登录成功')
+        await store.dispatch('GetUserMenu', res.data)
+        await store.dispatch('saveActiveNav', '/info/dashboard')
+        await this.$router.push('/info/dashboard')
+      }
+    },
     // 注册
     register () {
       this.$refs.loginFormRef.validate(async valid => {
         if (valid) {
-          const {
-            code,
-            data
-          } = await getUserByUsername(this.loginForm.username)
+          const { code, data } = await getUserByUsername(this.loginForm.username)
           if (code !== 20000) {
             this.$message.error('查询错误')
             return false
