@@ -48,6 +48,22 @@ import { getUserByUsername, registerUser, getUserMenuList } from '@/api/auth'
 export default {
   name: 'Login',
   data () {
+    // 验证用户名是否已经注册
+    const isUserNameCheck = (rule, value, callback) => {
+      if (this.isLogin) {
+        return callback()
+      } else {
+        getUserByUsername(value).then(res => {
+          if (res.code !== 20000) {
+            return callback(new Error('系统错误！请稍后重试！'))
+          }
+          if (res.data === true) {
+            return callback(new Error('用户名已注册！'))
+          }
+          return callback()
+        })
+      }
+    }
     return {
       // 判断是否为登录
       isLogin: true,
@@ -67,6 +83,10 @@ export default {
             min: 3,
             max: 10,
             message: '长度在 3 到 10 个字符',
+            trigger: 'blur'
+          },
+          {
+            validator: isUserNameCheck,
             trigger: 'blur'
           }
         ],
@@ -154,6 +174,8 @@ export default {
             const { code } = response
             if (code === 20000) {
               this.$message.success('注册成功')
+              this.isLogin = true
+              this.resetLoginForm()
             }
           })
         }
