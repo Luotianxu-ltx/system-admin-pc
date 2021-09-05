@@ -2,21 +2,21 @@
   <div class="userInfo">
     <img src="../../../assets/img/17e2f2f4c273bcf288d7193810557d80.jpeg" alt="">
     <div class="detail">
-      <div class="name">admin</div>
-      <div class="role">超级管理员</div>
+      <div class="name">{{ user.username }}</div>
+      <div class="role">{{ user.roles }}</div>
     </div>
     <div class="info">
       <div class="list">
         <div class="text">
           <Icon icon="dianhua" class="icon"></Icon>电话
         </div>
-        <div class="text-content">15122061897</div>
+        <div class="text-content">{{ user.mobile }}</div>
       </div>
       <div class="list">
         <div class="text">
           <Icon icon="youxiang" class="icon"></Icon>邮箱
         </div>
-        <div class="text-content">1265062404@qq.com</div>
+        <div class="text-content">{{ user.email }}</div>
       </div>
       <div class="list">
         <div class="text">
@@ -35,8 +35,28 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
-  name: 'userInfo'
+  name: 'userInfo',
+  computed: {
+    ...mapGetters([
+      'userInfo'
+    ])
+  },
+  mounted () {
+    this.user = JSON.parse(this.userInfo)
+    if (this.user.roles.length === 1) {
+      this.user.roles = this.user.roles[0]
+    } else {
+      this.user.roles = this.user.roles.join('/')
+    }
+    console.log(this.user)
+  },
+  data () {
+    return {
+      user: ''
+    }
+  }
 }
 </script>
 

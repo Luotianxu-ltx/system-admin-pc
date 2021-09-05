@@ -15,7 +15,7 @@
           <div class="user">
             <div>
               <div class="userName">{{ name }}</div>
-              <div class="role">超级管理员</div>
+              <div class="role">{{role}}</div>
             </div>
             <Icon icon="xiangxia" font="16"></Icon>
           </div>
@@ -49,13 +49,20 @@ export default {
   data () {
     return {
       name: '',
-      img: ''
+      img: '',
+      role: ''
     }
   },
   mounted () {
     const userInfo = JSON.parse(this.userInfo)
     this.name = userInfo.username
     this.img = userInfo.imageUrl
+    this.role = userInfo.roles
+    if (this.role.length === 1) {
+      this.role = this.role[0]
+    } else {
+      this.role = this.role.join('/')
+    }
   },
   methods: {
     logout () {
